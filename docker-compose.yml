@@ -1,0 +1,25 @@
+
+version: '3.1'
+
+services:
+
+  postgres:
+    container_name: customer_db
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: customer_db
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432
+
+  spring-boot:
+    container_name: custumer_IS
+    image: customer-infosystem
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    ports:
+      - 8080:8080
